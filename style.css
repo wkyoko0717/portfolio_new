@@ -336,3 +336,154 @@ header {
     color: rgba(255, 255, 255, 0.4);
     /* 年号は少し薄くして奥行きを出す */
 }
+
+/* セクション全体の装飾 */
+.work-section {
+    position: relative;
+    padding: 40px 5%;
+    min-height: 800px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.work-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 100px;
+    background-color: rgb(0, 0, 0);
+}
+
+/* 左上の黒背景テキスト */
+.work-desc p {
+    flex: 1;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(38, 38, 38, 0.5);
+    display: inline-block;
+    padding: 50px 50px;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    position: absolute;
+    left: 0%;
+    /* 画面の半分 */
+    transform: translateX(-2%);
+    /* 自分の半分だけ戻す */
+
+    /* あとは高さ（top）を調整するだけ */
+    /* top: 150px; */
+}
+
+/* 右上の白枠GAME */
+.work-label {
+    flex: 1;
+    position: absolute;
+    top: 120px;
+    right: 3%;
+}
+
+.work-label span {
+    border: 1px solid #fff;
+    border-radius: 50px;
+    /* 角丸枠 */
+    padding: 8px 25px;
+    font-size: 1.8rem;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+}
+
+/* ギャラリーの配置（横並びとバラつき） */
+.game-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: center;
+    margin-top: 0px;
+    padding-top: 80px;
+    padding-bottom: 60px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.game-item {
+    width: 20%;
+    text-align: center;
+    padding: 20px 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 修正前：作品画像のベース設定 */
+.game-item img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* サムネイルが横長やから、16:9 くらいが綺麗やで */
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    /* 魔法のスパイス：ここからモノトーン化する */
+    filter: grayscale(100%) opacity(70%);
+    /* モノトーン100% ＋ 透明度70% でさらに洗練 */
+    transition: filter 0.8s ease, opacity 0.8s ease;
+    /* 0.8s かけてじわ〜っと */
+}
+
+/* 修正後：マウスが乗った瞬間の姿 */
+.game-item:hover img {
+    /* 魔法を解く：カラーに戻して不透明にする */
+    filter: grayscale(0%) opacity(100%);
+}
+
+.game-role {
+    font-size: 0.7rem;
+    /* タイトルより一回り小さく */
+    color: rgba(255, 255, 255, 0.5);
+    /* 不透明度を下げて「薄く」する */
+    letter-spacing: 0.1em;
+    /* 英字は少し字間を広げると洗練されるで */
+    margin-top: 4px;
+    /* タイトルとの距離を少しだけ空ける */
+    /* font-style: italic; */
+    /* 斜体にしてもオシャレやな */
+}
+
+/* ふわふわ浮かぶアニメーション */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    /* 15px分上に浮く */
+}
+
+/* 各アイテムにバラつきを持たせる */
+.floating-1 {
+    animation: float 4s ease-in-out infinite;
+    margin-top: 0;
+}
+
+.floating-2 {
+    animation: float 5s ease-in-out infinite;
+    margin-top: 40px;
+}
+
+/* 少し下げる */
+.floating-3 {
+    animation: float 4.5s ease-in-out infinite;
+    margin-top: -20px;
+}
+
+/* 少し上げる */
+.floating-4 {
+    animation: float 6s ease-in-out infinite;
+    margin-top: 20px;
+}
+
+.game-title {
+    color: rgba(255, 255, 255, 0.6);
+}
