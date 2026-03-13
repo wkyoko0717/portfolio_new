@@ -11,6 +11,6 @@ const observer = new IntersectionObserver((entries) => {
 });
 
 // すべての .fade-in 要素を見張るように命令する
-document.querySelectorAll('.fade-in, .line-grow').forEach(el => {
+document.querySelectorAll('.fade-in, .line-grow, .work-desc').forEach(el => {
     observer.observe(el);
 });

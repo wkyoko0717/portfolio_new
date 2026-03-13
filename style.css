@@ -9,20 +9,54 @@ body {
     margin: 0;
     padding: 0;
     color: #ffffff;
-    min-height: 100vh;
-    /* 画面全体の高さを確保する（これ重要！） */
-
-    /* 1. まずは光（濃くしたで！） 2. その後にベースの色 */
-    background:
-        radial-gradient(circle at 10% 90%, rgba(255, 165, 0, 0.4) 0%, rgba(255, 165, 0, 0) 25%),
-        radial-gradient(circle at 90% 10%, rgba(255, 165, 0, 0.3) 0%, rgba(255, 165, 0, 0) 25%),
-        #383838;
-
-    background-attachment: fixed;
     font-family: "Poiret One", "Zen Kaku Gothic Antique", sans-serif;
+    background-color: #383838;
+    /* 宇宙の暗闇ベース */
+    position: relative;
+    /* 背景レイヤーを置くための基準 */
 }
 
-.material-symbols-outlined {
+/* 背景専用の動くレイヤー */
+body::before {
+    content: "";
+    position: fixed;
+    /* 画面に固定（スクロールしても付いてくる） */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* 文字や画像より後ろに配置 */
+
+    /* 3つの光源をここに書く！ */
+    background-image:
+        radial-gradient(circle at 90% 15%, rgba(74, 58, 42, 0.8) 0%, transparent 25%),
+        radial-gradient(circle at 20% 50%, rgba(74, 58, 42, 0.8) 0%, transparent 25%),
+        radial-gradient(circle at 70% 90%, rgba(74, 58, 42, 0.8) 0%, transparent 25%);
+
+    background-size: 100% 100%;
+    /* ここは100%で固定 */
+
+    /* 明滅アニメーションを背景だけに適用 */
+    animation: pulseGradient 8s ease-in-out infinite;
+}
+
+
+@keyframes pulseGradient {
+
+    0%,
+    100% {
+        filter: brightness(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        filter: brightness(1.5);
+        opacity: 1;
+    }
+}
+
+*/ .material-symbols-outlined {
     font-size: 32px;
     font-variation-settings:
         'FILL' 0,
@@ -341,7 +375,7 @@ header {
 .work-section {
     position: relative;
     padding: 40px 5%;
-    min-height: 800px;
+    min-height: 600px;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -351,6 +385,30 @@ header {
     justify-content: space-between;
     margin-bottom: 100px;
     background-color: rgb(0, 0, 0);
+}
+
+.work-desc {
+    opacity: 0;
+    transform: translateX(-60px);
+    /* 左へマイナス移動 */
+    transition: opacity 2.4s ease, transform 2.4s ease;
+    /* 1.2sかけて優しく */
+    /* --- ここを追加！ --- */
+    width: fit-content;
+    /* 中身の文字に合わせる */
+    min-width: 400px;
+    /* 最低でもこれくらいは幅を確保する */
+    white-space: nowrap;
+    /* 勝手に改行させない魔法 */
+    /* ------------------- */
+    margin-left: -5%;
+    /* 親要素の余白分だけ「左にハミ出す」設定 */
+}
+
+.work-desc.is-visible {
+    /* 単体でJSに任せるのが確実！ */
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* 左上の黒背景テキスト */
@@ -423,7 +481,7 @@ header {
     /* 魔法のスパイス：ここからモノトーン化する */
     filter: grayscale(100%) opacity(70%);
     /* モノトーン100% ＋ 透明度70% でさらに洗練 */
-    transition: filter 0.8s ease, opacity 0.8s ease;
+    transition: 0.8s ease;
     /* 0.8s かけてじわ〜っと */
 }
 
@@ -431,6 +489,17 @@ header {
 .game-item:hover img {
     /* 魔法を解く：カラーに戻して不透明にする */
     filter: grayscale(0%) opacity(100%);
+    transform: scale(1.05);
+}
+
+.game-title {
+    font-family: "Zen Kaku Gothic Antique";
+}
+
+.writing-title {
+    font-family: "Zen Kaku Gothic Antique";
+    line-height: 2;
+    margin-top: 15px;
 }
 
 .game-role {
@@ -469,21 +538,176 @@ header {
 
 .floating-2 {
     animation: float 5s ease-in-out infinite;
-    margin-top: 40px;
+    margin-top: 0;
+    transform: translateY(40px);
 }
 
 /* 少し下げる */
 .floating-3 {
     animation: float 4.5s ease-in-out infinite;
-    margin-top: -20px;
+    margin-top: 0;
+    transform: translateY(-40px);
 }
 
 /* 少し上げる */
 .floating-4 {
     animation: float 6s ease-in-out infinite;
-    margin-top: 20px;
+    margin-top: 0;
+    transform: translateY(20px);
 }
 
 .game-title {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 15px;
+    /* ここで画像との距離を自由に調整してな！ */
+}
+
+.web-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    /* これが「折り返し」の魔法！ */
+    justify-content: center;
+    /* 全体を真ん中に寄せる */
+    gap: 25px;
+    /* 縦の隙間を40px、横を60pxにする */
+    margin-top: 100px;
+    padding: 80px 15% 60px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.web-item {
+    width: 25%;
+    text-align: center;
+    /* align-self を使って、横並びのアイテムの高さを揃える */
+    display: flex;
+    flex-direction: column;
+}
+
+.web-item img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    /* サムネイルが横長やから、16:9 くらいが綺麗やで */
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* 魔法のスパイス：ここからモノトーン化する */
+    /* filter: grayscale(100%) opacity(70%); */
+    /* モノトーン100% ＋ 透明度70% でさらに洗練 */
+    filter: grayscale(0%) opacity(70%);
+    transition: 0.8s ease;
+    /* transition: filter 0.8s ease, opacity 0.8s ease; */
+    /* 0.8s かけてじわ〜っと */
+}
+
+.web-item:hover img {
+    filter: grayscale(0%) opacity(100%);
+    transform: translateY(-5px);
+    transform: scale(1.05);
+    /* ホバーで少し浮き上がる演出 */
+}
+
+.video-gallery {
+    display: flex;
+    flex-direction: column;
+    /* 縦に並べる */
+    align-items: center;
+    /* 真ん中に寄せる */
+    gap: 40px;
+    /* 塊ごとの隙間 */
+    margin-top: 100px;
+    padding: 80px 15% 60px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.video-item {
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    /* 親要素に transition はいらないので削除してOK */
+}
+
+.video-monitors {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.video-monitors iframe {
+    width: calc((100% - 15px) / 2);
+    aspect-ratio: 16 / 9;
+    border: none;
+    /* 最初は暗く、モノクロに */
+    filter: grayscale(100%) brightness(1);
+    transition: all 0.6s ease;
+    margin-bottom: 25px;
+    /* pointer-events: none; は削除！ */
+}
+
+.video-monitors iframe:hover {
+    filter: grayscale(0%) brightness(1);
+    /* 鮮やかに、明るく */
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.video-item:nth-child(1) {
+    position: relative;
+    left: -80px;
+    /* 左に50px動かす */
+}
+
+/* 2段目 */
+.video-item:nth-child(2) {
+    position: relative;
+    left: 80px;
+    /* 右に50px動かす */
+}
+
+.video-item:nth-child(3) {
+    position: relative;
+    left: -20px;
+    /* 右に50px動かす */
+}
+
+.writing-gallery {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 60px 20px;
+    /* 縦の隙間を少し広めにとると綺麗やで */
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 80px 5% 60px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.writing-item {
+    width: 28%;
+    /* 3列に収まるサイズ */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 20px 8px;
+}
+
+.writing-item img {
+    width: 100%;
+    /* 縦長(3/4)やったのを、横長(16/9)に変えるだけでOK！ */
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    /* filter: grayscale(100%) opacity(70%); */
+    transition: 0.8s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.writing-item:hover img {
+    filter: grayscale(0%) opacity(100%);
+    transform: translateY(-5px);
+    transform: scale(1.05);
+    /* ホバーで少し浮き上がる演出 */
 }
